@@ -1,0 +1,30 @@
+import SolowChart from './SolowChart';
+import './App.css'; // Para estilos si los necesitas
+
+# Capítulo 1: La Acumulación de Capital
+
+El modelo de Solow parte de una función de producción neoclásica. La ecuación fundamental que describe la dinámica del capital es:
+
+$$
+\dot{k}(t) = s k(t)^\alpha - (n + g + \delta)k(t)
+$$
+
+Donde observamos que el ahorro ($s$) es la única fuente de inversión bruta.
+
+### Simulación Interactiva A: Tasa de Ahorro Baja
+Si fijamos una tasa de ahorro del **20%**, observamos el siguiente comportamiento de convergencia. Intenta mover el cursor sobre la gráfica.
+
+<div className="chart-container">
+  <SolowChart params={{ s: 0.2, n: 0.02, g: 0.02, delta: 0.05, alpha: 0.33 }} />
+</div>
+
+Sin embargo, ¿qué sucede si aumentamos el ahorro?
+
+### Simulación Interactiva B: Tasa de Ahorro Alta ("Milagro Económico")
+A continuación vemos una economía con $s=0.45$. Nota cómo el estado estacionario ($k^*$) se desplaza hacia la derecha.
+
+<div className="chart-container">
+  <SolowChart params={{ s: 0.45, n: 0.02, g: 0.02, delta: 0.05, alpha: 0.33 }} />
+</div>
+
+> **Conclusión:** El ahorro tiene efectos de nivel, pero no de crecimiento perpetuo.

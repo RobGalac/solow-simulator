@@ -1,0 +1,104 @@
+// src/SolowChart.jsx
+import { useEffect, useRef } from 'react';
+import * as d3 from 'd3';
+
+const SolowChart = ({ params }) => {
+  const d3Container = useRef(null);
+
+  useEffect(() => {
+    if (params && d3Container.current) {
+      const { s, n, g, delta, alpha } = params;
+      const denom = n + g + delta;
+      
+      // Limpiar gráfico anterior
+      const svg = d3.select(d3Container.current);
+      svg.selectAll("*").remove();
+
+      // Configuración D3
+      const width = 600, height = 300;
+      const margin = { top: 20, right: 30, bottom: 30, left: 50 };
+      
+      // Calcular k* para definir escala fija (para que se vea la animación)
+      // Usamos un k* hipotético alto (s=0.5) para fijar el eje X
+      const maxK = Math.pow(0.5 / denom, 1 / (1 - alpha)) * 1.5;
+
+      // Escalas
+      const x = d3.scaleLinear().domain([0, maxK]).range([margin.left, width - margin.right]);
+      const y = d3.scaleLinear().domain([0, 5]).range([height - margin.bottom, margin.top]);
+
+      // Generar Datos para las curvas
+      const data = d3.range(0, maxK, maxK/100).map(k => ({
+        k,
+        invReal: s * Math.pow(k, alpha),
+        invBreak: denom * k
+      }));
+
+      // Ejes
+      svg.append("g")
+        .attr("transform", `translate(0,${height - margin.bottom})`)
+        .call(d3.axisBottom(x));
+      svg.append("g")
+        .attr("transform", `translate(${margin.left},0)`)
+        .call(d3.axisLeft(y));
+
+      // Rejilla (Grid)
+      svg.append("g")
+        .attr("class", "grid")
+        .call(d3.axisLeft(y).tickSize(-width + margin.left + margin.right).tickFormat(""))
+        .attr("transform", `translate(${margin.left},0)`)
+        .attr("stroke-opacity", 0.1);
+
+      // Curvas
+      const lineReal = d3.line().x(d => x(d.k)).y(d => y(d.invReal));
+      const lineBreak = d3.line().x(d => x(d.k)).y(d => y(d.invBreak));
+
+      // Curva Inversión Real (Azul)
+      svg.append("path")
+        .datum(data)
+        .attr("fill", "none")
+        .attr("stroke", "#2980b9")
+        .attr("stroke-width", 3)
+        .attr("d", lineReal);
+
+      // Curva Depreciación (Roja Punteada)
+      svg.append("path")
+        .datum(data)
+        .attr("fill", "none")
+        .attr("stroke", "#c0392b")
+        .attr("stroke-width", 2)
+        .attr("stroke-dasharray", "5,5")
+        .attr("d", lineBreak);
+
+      // Punto de Equilibrio actual
+      const k_star_actual = Math.pow(s / denom, 1 / (1 - alpha));
+      
+      svg.append("circle")
+        .attr("cx", x(k_star_actual))
+        .attr("cy", y(denom * k_star_actual))
+        .attr("r", 8)
+        .attr("fill", "gold")
+        .attr("stroke", "black");
+        
+      // Texto k*
+      svg.append("text")
+        .attr("x", x(k_star_actual))
+        .attr("y", y(denom * k_star_actual) - 15)
+        .text(`k*`)
+        .attr("font-size", "12px")
+        .attr("text-anchor", "middle");
+    }
+  }, [params]); // Se ejecuta cada vez que 'params' cambia
+
+  return (
+    <div style={{border: '1px solid #ddd', borderRadius: '8px', padding: '10px', background: 'white'}}>
+        <svg 
+            className="d3-component" 
+            viewBox="0 0 600 300" // Hace que el SVG sea responsive
+            style={{width: '100%', height: 'auto'}}
+            ref={d3Container} 
+        />
+    </div>
+  );
+}
+
+export default SolowChart;

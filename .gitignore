@@ -1,0 +1,19 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Dependencias (NUNCA subir esto)
+node_modules/
+
+# Archivos de compilación
+dist/
+
+# Variables de entorno y sistema
+.DS_Store
+.env
+
+# Base de datos local (Opcional)
+# Si quieres que la gente vea tus escenarios guardados, NO pongas la siguiente línea.
+# Si quieres que bajen la app limpia, agrega esto:
+database.sqlite
