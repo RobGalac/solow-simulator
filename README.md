@@ -1,16 +1,56 @@
-# React + Vite
+# Solow Growth Engine 📈
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicación interactiva Full Stack para la simulación de crecimiento económico basada en el modelo de Solow-Swan (Romer, Cap 1).
 
-Currently, two official plugins are available:
+**Tecnologías:** React (Vite) + Node.js (Express) + SQLite + D3.js + MDX.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Características
+- ⚛️ **Simulación en Tiempo Real:** Visualización dinámica con D3.js.
+- 🎛️ **Control Total:** Ajuste de parámetros ($s, n, g, \delta, \alpha$) al vuelo.
+- 💾 **Persistencia de Datos:** Backend en Node.js que guarda escenarios en SQLite.
+- 📄 **Narrativa Interactiva:** Tesis integrada usando MDX (Markdown + JSX).
 
-## React Compiler
+## Cómo ejecutarlo localmente
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Este proyecto usa una arquitectura cliente-servidor concurrente.
 
-## Expanding the ESLint configuration
+1. **Clonar el repositorio**
+   ```bash
+   git clone [https://github.com/TU_USUARIO/economic-growth-simulator.git](https://github.com/TU_USUARIO/economic-growth-simulator.git)
+   cd economic-growth-simulator
+   ```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Instalar dependencias
+    Bash
+
+    ```bash
+    npm install
+    ```
+Ejecutar (Frontend + Backend)
+Necesitas dos terminales:
+
+Terminal 1 (Backend API - Puerto 3001):
+    Bash
+```bash
+    node server.js
+```
+    Terminal 2 (Frontend React - Puerto 5173):
+    Bash
+```bash
+    npm run dev
+```
+    Abrir en el navegador
+    Visita http://localhost:5173
+
+
+---
+
+### ¿Cómo actualizarlo después?
+
+Cada vez que hagas cambios (ej. agregues el Capítulo 2), solo repites:
+
+```bash
+git add .
+git commit -m "Agregando Capítulo 2"
+git push
+```
