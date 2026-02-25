@@ -54,3 +54,7 @@ git add .
 git commit -m "Agregando Capítulo 2"
 git push
 ```
+
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/robgalac/solow-simulator)
+
